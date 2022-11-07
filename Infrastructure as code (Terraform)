@@ -1,0 +1,22 @@
+# AWS
+This repository will contain all the Terraform (Infratructure as code) done for cloud resume challenge.
+
+#First I have created S3 bucket and enable static hosting:
+
+resource "aws_s3_bucket" "bucket" {
+bucket= "chetancloudresumebucket" #unique bucket name
+acl= "public-read"
+policy= file("policy.json")
+website {
+    index_document= "chetandhote.html"
+}
+}
+#Now I will upload resume to the bucket:
+
+resource "aws_s3_bucket_object" "object" {
+  bucket = "chetancloudresumebucket12"
+  key    = "chetandhote.html"
+  source = "static/chetandhote.html"
+  etag = filemd5("static/chetandhote.html")
+}
+
